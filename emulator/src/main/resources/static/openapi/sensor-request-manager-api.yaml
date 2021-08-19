@@ -1,0 +1,75 @@
+openapi: 3.0.2
+info:
+  title: Sensor-Request-Manager API
+  description: Sensor-Request-Manager API
+  version: 1.0.0
+servers:
+  - url: '{protocol}://{server}:{port}/{basePath}'
+    description: Open API
+    variables:
+      protocol:
+        enum:
+          - 'http'
+        default: 'http'
+      server:
+        default: 'localhost'
+      port:
+        enum:
+          - '80'
+        default: '80'
+      basePath:
+        default: 'api'
+
+paths:
+  /v1/metrics:
+    post:
+      operationId: sendMetrics
+      responses:
+        202:
+          description: Send container metrics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultipleContainerMetricsApi'
+
+components:
+  schemas:
+    MultipleContainerMetricsApi:
+      properties:
+        containers:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContainerApi"
+    ContainerApi:
+      properties:
+        containerId:
+          type: integer
+          format: int32
+        containerMetricsList:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContainerMetricsApi"
+      required:
+        - containerId
+    ContainerMetricsApi:
+      properties:
+        time:
+          type: string
+          format: date-time
+        metrics:
+          type: array
+          items:
+            $ref: "#/components/schemas/MetricApi"
+      required:
+        - time
+    MetricApi:
+      properties:
+        metricName:
+          type: string
+        metricValue:
+          type: integer
+          format: int32
+      required:
+        - metricName
+        - metricValue

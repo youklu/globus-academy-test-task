@@ -1,0 +1,18 @@
+{
+  "containerCount": 2,
+  "startTime": "2017-08-14 12:17:47",
+  "timeShiftInSeconds": 2,
+  "generatingCount": 2,
+  "metricConfigs": [
+    {
+      "metricName": "metricName1",
+      "minValue": 1,
+      "maxValue": 10
+    },
+    {
+      "metricName": "metricName2",
+      "minValue": 20,
+      "maxValue": 30
+    }
+  ]
+}

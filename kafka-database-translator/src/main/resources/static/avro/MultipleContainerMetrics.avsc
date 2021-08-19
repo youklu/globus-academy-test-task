@@ -1,0 +1,59 @@
+{
+  "namespace": "com.globus.academy.avro",
+  "type": "record",
+  "name": "MultipleContainerMetricsKafka",
+  "fields": [
+    {
+      "name": "containers",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "ContainerKafka",
+          "type": "record",
+          "fields": [
+            {
+              "name": "containerId",
+              "type": "int"
+            },
+            {
+              "name": "containerMetricsList",
+              "type": {
+                "type": "array",
+                "items": {
+                  "name": "ContainerMetricsKafka",
+                  "type": "record",
+                  "fields": [
+                    {
+                      "name": "timestamp",
+                      "type": "long"
+                    },
+                    {
+                      "name": "metrics",
+                      "type": {
+                        "type": "array",
+                        "items": {
+                          "name": "MetricKafka",
+                          "type": "record",
+                          "fields": [
+                            {
+                              "name": "metricName",
+                              "type": "string"
+                            },
+                            {
+                              "name": "metricValue",
+                              "type": "int"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+openapi: 3.0.2
+info:
+  title: Emulator API
+  description: Emulator API
+  version: 1.0.0
+servers:
+  - url: '{protocol}://{server}:{port}/{basePath}'
+    description: Open API
+    variables:
+      protocol:
+        enum:
+          - 'http'
+        default: 'http'
+      server:
+        default: 'localhost'
+      port:
+        enum:
+          - '80'
+        default: '80'
+      basePath:
+        default: 'api'
+
+paths:
+  /v1/generator:start:
+    post:
+      operationId: startGenerator
+      responses:
+        202:
+          description: Start generator

@@ -1,0 +1,90 @@
+openapi: 3.0.2
+info:
+  title: WEB API
+  description: WEB API
+  version: 1.0.0
+servers:
+  - url: '{protocol}://{server}:{port}/{basePath}'
+    description: Open API
+    variables:
+      protocol:
+        enum:
+          - 'http'
+        default: 'http'
+      server:
+        default: 'localhost'
+      port:
+        enum:
+          - '80'
+        default: '80'
+      basePath:
+        default: '/api'
+
+paths:
+  /v1/metrics/{page_number}:
+    get:
+      operationId: getMetrics
+      parameters:
+        - in: path
+          name: page_number
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: Page number
+        - in: query
+          name: time_from
+          schema:
+            type: string
+            format: date-time
+          description: Time from
+        - in: query
+          name: time_to
+          schema:
+            type: string
+            format: date-time
+          description: Time to
+        - in: query
+          name: record_count_on_page
+          schema:
+            type: integer
+          description: The numbers of items on page
+      responses:
+        200:
+          description: Get container metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricPage'
+
+components:
+  schemas:
+    MetricPage:
+      properties:
+        number:
+          type: integer
+          format: int32
+        metrics:
+          type: array
+          items:
+            $ref: "#/components/schemas/MetricApi"
+      required:
+        - number
+    MetricApi:
+      properties:
+        containerId:
+          type: integer
+          format: int32
+        time:
+          type: string
+          format: date-time
+        metricName:
+          type: string
+        metricValue:
+          type: integer
+          format: int32
+      required:
+        - containerId
+        - time
+        - metricName
+        - metricValue
